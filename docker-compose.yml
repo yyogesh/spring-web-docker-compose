@@ -1,0 +1,28 @@
+services:
+  app:
+    build: .
+    ports:
+      - "8080:8080"
+    networks:
+      - message-network
+
+  postgres:
+    image: postgres:latest
+    environment:
+      POSTGRES_USER: test
+      POSTGRES_PASSWORD: 1234
+      POSTGRES_DB: learn
+    ports:
+      - 5432:5433
+    networks:
+      - message-network
+    volumes:
+      - postgres-message-data:/var/lib/postgresql/data
+
+
+networks:
+  message-network:
+    driver: bridge
+
+volumes:
+  postgres-message-data:
